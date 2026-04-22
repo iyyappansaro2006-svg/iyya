@@ -1,0 +1,24 @@
+name: Secure Workflow Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ✅ Install the CLI FIRST
+      - name: Install CLI
+        run: npm install -g some-cli
+
+      # ✅ Then use it
+      - name: Run CLI command
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: some-cli --token "$ACCESS_TOKEN"
